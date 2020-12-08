@@ -1,38 +1,48 @@
 import tkinter as tk
+import random
 
 HEIGHT = 400
 WIDTH = 400
 
+# BACKEND LOGIC STUFF
+class Die:
+    def __init__(self):
+        self.value = random.randrange(1,6)
+
+    def getValue(self):
+        return self.value
+
+class Roll:
+    def __init__(self):
+        self.die1 = Die()
+        self.die2 = Die()
+
+    def getDie1value(self):
+        return self.die1.getValue()
+    
+    def getDie2value(self):
+        return self.die2.getValue()
+
+    def getCombinedValue(self):
+        return self.getDie1value() + self.getDie2value()
+
+def rollDice():
+    roll = Roll()
+    array_game.append(roll)
+    # print(array_game)
+
+
+array_session = []
+array_game = []
+
+
+# GUI STUFF
 root = tk.Tk()
 
-die1Frame = tk.Frame(root)
-die1Num1 = tk.Button(die1Frame, text="1")
-die1Num2 = tk.Button(die1Frame, text="2")
-die1Num3 = tk.Button(die1Frame, text="3")
-die1Num4 = tk.Button(die1Frame, text="4")
-die1Num5 = tk.Button(die1Frame, text="5")
-die1Num6 = tk.Button(die1Frame, text="6")
-die1Num1.pack()
-die1Num2.pack()
-die1Num3.pack()
-die1Num4.pack()
-die1Num5.pack()
-die1Num6.pack()
-die1Frame.pack()
+frame = tk.Frame()
+frame.pack()
 
-die2Frame = tk.Frame(root)
-die2Num1 = tk.Button(die2Frame, text="1")
-die2Num2 = tk.Button(die2Frame, text="2")
-die2Num3 = tk.Button(die2Frame, text="3")
-die2Num4 = tk.Button(die2Frame, text="4")
-die2Num5 = tk.Button(die2Frame, text="5")
-die2Num6 = tk.Button(die2Frame, text="6")
-die2Num1.pack()
-die2Num2.pack()
-die2Num3.pack()
-die2Num4.pack()
-die2Num5.pack()
-die2Num6.pack()
-die2Frame.pack()
+btnRoll = tk.Button(frame, text="Button", command=rollDice)
+btnRoll.pack()
 
 root.mainloop()
