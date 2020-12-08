@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 
 HEIGHT = 400
 WIDTH = 400
@@ -22,8 +21,18 @@ class Roll:
 def submitDice():
     d1 = die1value.get()
     d2 = die2value.get()
-    roll = Roll(d1, d2)
-    array_game.append(roll)
+
+    if (d1 > 0 and d2 > 0):
+        consoleOut("You rolled " + str(d1) + " " + str(d2))
+        roll = Roll(d1, d2)
+        array_game.append(roll)
+
+    else:
+        consoleOut("Select dice values before submitting")
+
+def consoleOut(text_string):
+    text_console.insert(tk.INSERT,(text_string + "\n"))
+
 
 array_session = []
 array_game = []
@@ -34,12 +43,15 @@ root = tk.Tk()
 frame_main = tk.Frame()
 frame_main.pack()
 
-frame_die1 = tk.Frame(frame_main)
+frame_dice_select = tk.Frame(frame_main)
+frame_dice_select.pack()
+
+frame_die1 = tk.Frame(frame_dice_select)
 frame_die1.grid(row=0, column=0)
-frame_die2 = tk.Frame(frame_main)
+frame_die2 = tk.Frame(frame_dice_select)
 frame_die2.grid(row=0, column=1)
-frame_submit = tk.Frame(frame_main)
-frame_submit.grid(row=1)
+frame_submit = tk.Frame(frame_dice_select)
+frame_submit.grid(row=0, column=2)
 
 die1value = tk.IntVar()
 die2value = tk.IntVar()
@@ -72,5 +84,11 @@ d2r6.pack()
 
 button_submit = tk.Button(frame_submit, text="Submit", command=submitDice)
 button_submit.pack()
+
+frame_console = tk.Frame(frame_main)
+frame_console.pack()
+
+text_console = tk.Text(frame_console)
+text_console.pack()
 
 root.mainloop()
