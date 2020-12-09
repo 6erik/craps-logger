@@ -2,29 +2,50 @@ import tkinter as tk
 from roll import Roll
 
 # BACKEND LOGIC STUFF
-def submitDice():
+def submit_dice():
     d1 = die1value.get()
     d2 = die2value.get()
 
     if (d1 > 0 and d2 > 0):
-        consoleOut("You rolled " + str(d1) + " " + str(d2))
+        console_out("You rolled " + str(d1) + " " + str(d2))
         roll = Roll(d1, d2)
         array_game.append(roll)
 
     else:
-        consoleOut("Select dice values before submitting")
+        console_out("Select dice values before submitting")
 
-def consoleOut(text_string):
+def console_out(text_string):
     text_console.insert(tk.INSERT,(text_string + "\n"))
 
 array_session = []
 array_game = []
 
+game_in_progress = 0
+
+while game_in_progress:
+    print("in progres")
+
+
+
+
+
+
+
+
 # GUI STUFF
 root = tk.Tk()
 
-frame_main = tk.Frame()
+frame_main = tk.Frame(root)
 frame_main.pack()
+
+menu_bar = tk.Menu(root)
+menu_commands = tk.Menu(menu_bar, tearoff=0)
+menu_commands.add_radiobutton(label="Start logging", command=start_game)
+menu_commands.add_checkbutton(label="End logging", command=root.quit)
+menu_commands.add_separator()
+menu_commands.add_command(label="Exit", command=root.quit)
+menu_bar.add_cascade(label="Commands", menu=menu_commands)
+
 
 frame_dice_select = tk.Frame(frame_main)
 frame_dice_select.pack()
@@ -35,7 +56,6 @@ frame_die2 = tk.Frame(frame_dice_select)
 frame_die2.grid(row=1, column=1)
 frame_submit = tk.Frame(frame_dice_select)
 frame_submit.grid(row=2, column=1)
-
 
 label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
 label_die1.grid(row=0, column=0)
@@ -71,7 +91,7 @@ d2r5.grid(row=0, column=4)
 d2r6 = tk.Radiobutton(frame_die2, text="6", variable=die2value, value=6)
 d2r6.grid(row=0, column=5)
 
-button_submit = tk.Button(frame_submit, text="Submit", command=submitDice)
+button_submit = tk.Button(frame_submit, text="Submit", command=submit_dice)
 button_submit.pack()
 
 frame_console = tk.Frame(frame_main)
@@ -80,4 +100,5 @@ frame_console.pack()
 text_console = tk.Text(frame_console)
 text_console.pack()
 
+root.config(menu=menu_bar)
 root.mainloop()
