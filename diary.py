@@ -7,12 +7,12 @@ root.title("Craps Logger")
 
 # MODULE DEFINITIONS
 def submit_dice():
-    global game_in_progress, roll_number
+    global session_in_progress, roll_number
 
     d1 = die1value.get()
     d2 = die2value.get()
 
-    if game_in_progress:
+    if session_in_progress:
         if (d1 > 0 and d2 > 0):
             console_out("You rolled " + str(d1) + " " + str(d2))
             roll = Roll(d1, d2)
@@ -28,8 +28,8 @@ def submit_dice():
         console_out("Start game logging before submitting dice values")
 
 def start_game():
-    global game_in_progress
-    game_in_progress = 1
+    global session_in_progress
+    session_in_progress = 1
     print("Game started")
 
 def make_game_decision():
@@ -39,22 +39,41 @@ def make_game_decision():
     if roll_number == 1: # if point has not been set
         if (val == 4 or val == 5 or val == 6 or val == 8 or val == 9 or val == 10):
             point = val
+            console_out("The point is: " + str(val))
         else:
             game_over(val)
-
-def game_over(val):
-    global game_in_progress
-    game_in_progress = 0
-
-    if val == 7 or val == 11:
-        console_out("You win")
-    
-    elif val == 2 or val == 3:
-        console_out("You lose")
     
     else:
-        console_out("You push")
+        if val == point:
+            game_over(val)
+        elif val == 7:
+            game_over(val)
+        else:
+            pass
 
+def game_over(val):
+    global session_in_progress, point, roll_number, game_number, array_session, array_game
+    game_number += 1
+
+    if roll_number == 1:
+        if val == 7 or val == 11:
+            console_out("Passline win!")
+        
+        elif val == 2 or val == 3:
+            console_out("Passline loss.")
+        
+        else:
+            console_out("Passline loss.")
+
+    else:
+        if val == 7:
+            console_out("Passline loss.")
+        else:
+            console_out("Passline win!")
+    
+    roll_number = 0
+    array_session.append(array_game)
+    array_game.clear()
 
 def console_out(text_string):
     text_console.insert(tk.INSERT,(text_string + "\n"))
@@ -130,18 +149,12 @@ array_session = []
 array_game = []
 
 # PER SESSION VARIABLES
+session_in_progress = 0
 game_number = 0
 
 # PER GAME VARIABLES
 point = 0
 roll_number = 0
-
-game_in_progress = 0
-
-while game_in_progress:
-    root.update()
-    print("in progress'")
-    
 
 root.config(menu=menu_bar)
 root.mainloop()
