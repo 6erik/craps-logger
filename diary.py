@@ -1,47 +1,72 @@
 import tkinter as tk
 from roll import Roll
 
-# BACKEND LOGIC STUFF
+# GUI CODE
+root = tk.Tk()
+root.title("Craps Logger")
+
+# MODULE DEFINITIONS
 def submit_dice():
+    global game_in_progress, roll_number
+
     d1 = die1value.get()
     d2 = die2value.get()
 
-    if (d1 > 0 and d2 > 0):
-        console_out("You rolled " + str(d1) + " " + str(d2))
-        roll = Roll(d1, d2)
-        array_game.append(roll)
+    if game_in_progress:
+        if (d1 > 0 and d2 > 0):
+            console_out("You rolled " + str(d1) + " " + str(d2))
+            roll = Roll(d1, d2)
+            array_game.append(roll)
+            print("Appended Roll(" + str(d1) + "," + str(d2) + ")")
+            roll_number += 1
+            make_game_decision()
+
+        else:
+            console_out("Select dice values before submitting")
 
     else:
-        console_out("Select dice values before submitting")
+        console_out("Start game logging before submitting dice values")
+
+def start_game():
+    global game_in_progress
+    game_in_progress = 1
+    print("Game started")
+
+def make_game_decision():
+    global array_game, point, roll_number
+    val = array_game[roll_number - 1].get_dice_total()
+
+    if roll_number == 1: # if point has not been set
+        if (val == 4 or val == 5 or val == 6 or val == 8 or val == 9 or val == 10):
+            point = val
+        else:
+            game_over(val)
+
+def game_over(val):
+    global game_in_progress
+    game_in_progress = 0
+
+    if val == 7 or val == 11:
+        console_out("You win")
+    
+    elif val == 2 or val == 3:
+        console_out("You lose")
+    
+    else:
+        console_out("You push")
+
 
 def console_out(text_string):
     text_console.insert(tk.INSERT,(text_string + "\n"))
 
-array_session = []
-array_game = []
-
-game_in_progress = 0
-
-while game_in_progress:
-    print("in progres")
-
-
-
-
-
-
-
-
-# GUI STUFF
-root = tk.Tk()
-
+# GUI CODE CONTINUED
 frame_main = tk.Frame(root)
 frame_main.pack()
 
 menu_bar = tk.Menu(root)
 menu_commands = tk.Menu(menu_bar, tearoff=0)
-menu_commands.add_radiobutton(label="Start logging", command=start_game)
-menu_commands.add_checkbutton(label="End logging", command=root.quit)
+menu_commands.add_command(label="Start logging", command=start_game)
+menu_commands.add_command(label="End logging", command=root.quit)
 menu_commands.add_separator()
 menu_commands.add_command(label="Exit", command=root.quit)
 menu_bar.add_cascade(label="Commands", menu=menu_commands)
@@ -99,6 +124,24 @@ frame_console.pack()
 
 text_console = tk.Text(frame_console)
 text_console.pack()
+
+# BACKEND LOGIC
+array_session = []
+array_game = []
+
+# PER SESSION VARIABLES
+game_number = 0
+
+# PER GAME VARIABLES
+point = 0
+roll_number = 0
+
+game_in_progress = 0
+
+while game_in_progress:
+    root.update()
+    print("in progress'")
+    
 
 root.config(menu=menu_bar)
 root.mainloop()
