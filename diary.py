@@ -7,17 +7,17 @@ root.title("Craps Logger")
 
 # MODULE DEFINITIONS
 def submit_dice():
-    global session_in_progress, roll_number
+    global session_in_progress, roll_number, game_number
 
     d1 = die1value.get()
     d2 = die2value.get()
 
     if session_in_progress:
         if (d1 > 0 and d2 > 0):
-            console_out("You rolled " + str(d1) + " " + str(d2))
+            console_out("Gm"+ str(game_number+1) + "-Rd" + str(roll_number+1) + ": " + str(d1) + " " + str(d2))
             roll = Roll(d1, d2)
             array_game.append(roll)
-            print("Appended Roll(" + str(d1) + "," + str(d2) + ")")
+            print("Roll(" + str(d1) + "," + str(d2) + ")")
             roll_number += 1
             make_game_decision()
 
@@ -30,15 +30,16 @@ def submit_dice():
 def start_game():
     global session_in_progress
     session_in_progress = 1
-    print("Game started")
+    print("Logging started")
 
 def make_game_decision():
-    global array_game, point, roll_number
+    global array_game, point, roll_number, game_number
     val = array_game[roll_number - 1].get_dice_total()
 
     if roll_number == 1: # if point has not been set
         if (val == 4 or val == 5 or val == 6 or val == 8 or val == 9 or val == 10):
             point = val
+            game_number += 1
             console_out("The point is: " + str(val))
         else:
             game_over(val)
@@ -144,7 +145,7 @@ frame_console.pack()
 text_console = tk.Text(frame_console)
 text_console.pack()
 
-# BACKEND LOGIC
+# ARRAYS FOR FULL SESSION AND GAME LOGS
 array_session = []
 array_game = []
 
