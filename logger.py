@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.scrolledtext as st
 from roll import Roll
 
 # GUI CODE
@@ -88,7 +89,8 @@ def game_over(val):
     array_game.clear()
 
 def console_out(text_string):
-    text_console.insert(tk.INSERT,(text_string + "\n"))
+    text_console.insert(tk.END, (text_string + "\n"))
+    text_console.see(tk.END)
 
 # GUI CODE CONTINUED
 frame_main = tk.Frame(root)
@@ -103,6 +105,10 @@ menu_commands.add_command(label="Exit", command=root.quit)
 menu_bar.add_cascade(label="Commands", menu=menu_commands)
 
 ### FRAME - dice select
+### TK VARS
+die1value = tk.IntVar()
+die2value = tk.IntVar()
+
 frame_dice_select = tk.Frame(frame_main)
 frame_dice_select.grid(row=0, column=0)
 
@@ -118,9 +124,6 @@ label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
 label_die1.grid(row=0, column=0)
 label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
 label_die2.grid(row=1, column=0)
-
-die1value = tk.IntVar()
-die2value = tk.IntVar()
 
 d1r1 = tk.Radiobutton(frame_die1, text="1", variable=die1value, value=1)
 d1r1.grid(row=0, column=0)
@@ -192,7 +195,7 @@ label_after_dont_win.grid(row=3, column=2)
 frame_console = tk.Frame(frame_main)
 frame_console.grid(row=1)
 
-text_console = tk.Text(frame_console)
+text_console = st.ScrolledText(frame_console)
 text_console.pack()
 
 # ARRAYS FOR FULL SESSION AND GAME LOGS
