@@ -86,14 +86,12 @@ frame_main.pack()
 menu_bar = tk.Menu(root)
 menu_commands = tk.Menu(menu_bar, tearoff=0)
 menu_commands.add_command(label="Start logging", command=start_game)
-menu_commands.add_command(label="End logging", command=root.quit)
 menu_commands.add_separator()
 menu_commands.add_command(label="Exit", command=root.quit)
 menu_bar.add_cascade(label="Commands", menu=menu_commands)
 
-
 frame_dice_select = tk.Frame(frame_main)
-frame_dice_select.pack()
+frame_dice_select.grid(row=0, column=0)
 
 frame_die1 = tk.Frame(frame_dice_select)
 frame_die1.grid(row=0, column=1)
@@ -139,8 +137,14 @@ d2r6.grid(row=0, column=5)
 button_submit = tk.Button(frame_submit, text="Submit", command=submit_dice)
 button_submit.pack()
 
+frame_statistics = tk.Frame(frame_main)
+frame_statistics.grid(row=0, column=1)
+
+label_statistics = tk.Label(frame_statistics, text="Statistics")
+label_statistics.grid(row=0, column=0)
+
 frame_console = tk.Frame(frame_main)
-frame_console.pack()
+frame_console.grid(row=1)
 
 text_console = tk.Text(frame_console)
 text_console.pack()
