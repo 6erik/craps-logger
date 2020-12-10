@@ -83,6 +83,7 @@ def console_out(text_string):
 frame_main = tk.Frame(root)
 frame_main.pack()
 
+### MENU - commands
 menu_bar = tk.Menu(root)
 menu_commands = tk.Menu(menu_bar, tearoff=0)
 menu_commands.add_command(label="Start logging", command=start_game)
@@ -90,9 +91,11 @@ menu_commands.add_separator()
 menu_commands.add_command(label="Exit", command=root.quit)
 menu_bar.add_cascade(label="Commands", menu=menu_commands)
 
+### FRAME - dice select
 frame_dice_select = tk.Frame(frame_main)
 frame_dice_select.grid(row=0, column=0)
 
+## SUBFRAME - die1 & die2
 frame_die1 = tk.Frame(frame_dice_select)
 frame_die1.grid(row=0, column=1)
 frame_die2 = tk.Frame(frame_dice_select)
@@ -137,12 +140,26 @@ d2r6.grid(row=0, column=5)
 button_submit = tk.Button(frame_submit, text="Submit", command=submit_dice)
 button_submit.pack()
 
+### FRAME - statistics
 frame_statistics = tk.Frame(frame_main)
 frame_statistics.grid(row=0, column=1)
 
 label_statistics = tk.Label(frame_statistics, text="Statistics")
-label_statistics.grid(row=0, column=0)
+label_statistics.grid(row=0, column=1)
 
+label_pass = tk.Label(frame_statistics, text="Pass")
+label_pass.grid(row=1, column=1)
+
+label_dontpass = tk.Label(frame_statistics, text="Don't")
+label_dontpass.grid(row=1, column=2)
+
+label_first = tk.Label(frame_statistics, text="C.O.")
+label_first.grid(row=2, column=0)
+
+label_rest = tk.Label(frame_statistics, text="R2+")
+label_rest.grid(row=3, column=0)
+
+### FRAME - console
 frame_console = tk.Frame(frame_main)
 frame_console.grid(row=1)
 
