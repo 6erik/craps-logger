@@ -89,8 +89,10 @@ def game_over(val):
     array_game.clear()
 
 def console_out(text_string):
+    text_console.configure(state="normal")
     text_console.insert(tk.END, (text_string + "\n"))
     text_console.see(tk.END)
+    text_console.configure(state="disabled")
 
 # GUI CODE CONTINUED
 frame_main = tk.Frame(root)
@@ -196,6 +198,7 @@ frame_console = tk.Frame(frame_main)
 frame_console.grid(row=1)
 
 text_console = st.ScrolledText(frame_console)
+text_console.configure(state="disabled")
 text_console.pack()
 
 # ARRAYS FOR FULL SESSION AND GAME LOGS
