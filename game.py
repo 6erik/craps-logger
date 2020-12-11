@@ -17,6 +17,9 @@ class Game:
         else:
             raise TypeError("Object must be of type 'Roll'")
 
+    def get_roll_num(self):
+        return len(self.array_rolls)
+
     #def get_die_count(self, die_value):
         #return self.array_die_count[die_value - 1]
 

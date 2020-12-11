@@ -11,3 +11,6 @@ class Session:
 
         else:
             raise TypeError("Object must be of type 'Game'")
+    
+    def get_game_num(self):
+        return len(self.array_games)
