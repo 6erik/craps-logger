@@ -5,17 +5,21 @@ from game import Game
 from session import Session
 
 def main():
-    app = App()
-    app.root.mainloop()
+    # Create App instance, craps_logger
+    craps_logger = App()
+
+    # Start GUI event loop
+    craps_logger.root.mainloop()
 
 class App:
     def __init__(self):
         self.session = Session()
         self.game = Game()
+
         self.root = tk.Tk()
         self.root.title("Craps Logger")
         
-        ### TK VARS
+        # TK Variables to update labels
         self.die1value = tk.IntVar()
         self.die2value = tk.IntVar()
         self.strvar_r1pw = tk.StringVar()
@@ -23,30 +27,25 @@ class App:
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
 
+        # Statistics Variables
         self.r1_pass_win = 0
         self.r1_dont_win = 0
         self.after_pass_win = 0
         self.after_dont_win = 0
 
-        # Starting GUI event loop
+        # Call method to create all GUI widgets
         self.create_widgets()
 
     def create_widgets(self):
-        # GUI CODE CONTINUED
+        # Using 'frame_main' to pack all subframes
         frame_main = tk.Frame(self.root)
         frame_main.pack()
 
-        ### MENU - commands
-        menu_bar = tk.Menu(self.root)
-        menu_commands = tk.Menu(menu_bar, tearoff=0)
-        menu_commands.add_command(label="Exit", command=self.root.quit)
-        menu_bar.add_cascade(label="Commands", menu=menu_commands)
-
-        ### FRAME - dice select
+        ### Frame - Dice select
         frame_dice_select = tk.Frame(frame_main)
         frame_dice_select.grid(row=0, column=0)
 
-        ## SUBFRAME - die1 & die2
+        ## Subframe - Die1 & Die2
         frame_die1 = tk.Frame(frame_dice_select)
         frame_die1.grid(row=0, column=1)
         frame_die2 = tk.Frame(frame_dice_select)
@@ -88,7 +87,7 @@ class App:
         button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value.get(), self.die2value.get()))
         button_submit.pack()
 
-        ### FRAME - statistics
+        ### Frame - Statistics
         frame_statistics = tk.Frame(frame_main)
         frame_statistics.grid(row=0, column=1)
 
@@ -119,7 +118,7 @@ class App:
         self.label_after_dont_win = tk.Label(frame_statistics, textvariable=self.strvar_adw)
         self.label_after_dont_win.grid(row=3, column=2)
 
-        ### FRAME - console
+        ### Frame - Text console
         self.frame_console = tk.Frame(frame_main)
         self.frame_console.grid(row=1)
 
@@ -127,11 +126,12 @@ class App:
         self.text_console.configure(state="disabled", font=("Arial", 9))
         self.text_console.pack()
 
-    ### FUNCTION DEFINITIONS
+    ### Method definitions
     def submit_dice(self, d1, d2):
         roll_number = self.game.get_roll_num()
         game_number = self.session.get_game_num()
 
+        # Check if radio buttons were selected (0 if unselected)
         if (d1 > 0 and d2 > 0):
             roll = Roll(d1, d2)
             self.game.add_roll(roll)
@@ -145,7 +145,6 @@ class App:
     def make_game_decision(self, roll):
         val = roll.get_dice_total()
         roll_number = self.game.get_roll_num()
-        print("mgd: " + str(roll_number))
 
         if roll_number == 1: # if point has not been set
             if (val == 4 or val == 5 or val == 6 or val == 8 or val == 9 or val == 10):
@@ -163,7 +162,6 @@ class App:
 
     def game_over(self, val):
         roll_number = self.game.get_roll_num()
-        #print(str(roll_number))
 
         if roll_number == 1:
             if val == 7 or val == 11:
@@ -189,6 +187,7 @@ class App:
                 self.after_pass_win += 1
                 self.strvar_apw.set(str(self.after_pass_win))
         
+        # Add completed game to session, create new Game instance
         self.session.add_game(self.game)
         self.game = Game()
 
