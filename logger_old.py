@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.scrolledtext as st
 from roll import Roll
 
 # GUI CODE
@@ -54,47 +55,66 @@ def make_game_decision():
 
 def game_over(val):
     global session_in_progress, point, roll_number, game_number, array_session, array_game
+    global r1_pass_win, r1_dont_win, after_pass_win, after_dont_win
+    global strvar_r1pw, strvar_r1dw, strvar_apw, strvar_adw
+
     game_number += 1
 
     if roll_number == 1:
         if val == 7 or val == 11:
-            console_out("Passline win!")
+            console_out("Pass WIN - Dont LOSS")
+            r1_pass_win += 1
+            strvar_r1pw.set(str(r1_pass_win))
         
         elif val == 2 or val == 3:
-            console_out("Passline loss.")
+            console_out("Pass LOSS - Dont WIN")
+            r1_dont_win += 1
+            strvar_r1dw.set(str(r1_dont_win))
         
-        else:
-            console_out("Passline loss.")
+        else: # if val is 12
+            console_out("Pass LOSS - Dont PUSH")
 
     else:
         if val == 7:
-            console_out("Passline loss.")
+            console_out("Pass LOSS - Dont WIN")
+            after_dont_win += 1
+            strvar_adw.set(str(after_dont_win))
         else:
-            console_out("Passline win!")
+            console_out("Pass WIN - Dont LOSS")
+            after_pass_win += 1
+            strvar_apw.set(str(after_pass_win))
     
     roll_number = 0
     array_session.append(array_game)
     array_game.clear()
 
 def console_out(text_string):
-    text_console.insert(tk.INSERT,(text_string + "\n"))
+    text_console.configure(state="normal")
+    text_console.insert(tk.END, (text_string + "\n"))
+    text_console.see(tk.END)
+    text_console.configure(state="disabled")
 
 # GUI CODE CONTINUED
 frame_main = tk.Frame(root)
 frame_main.pack()
 
+### MENU - commands
 menu_bar = tk.Menu(root)
 menu_commands = tk.Menu(menu_bar, tearoff=0)
 menu_commands.add_command(label="Start logging", command=start_game)
-menu_commands.add_command(label="End logging", command=root.quit)
 menu_commands.add_separator()
 menu_commands.add_command(label="Exit", command=root.quit)
 menu_bar.add_cascade(label="Commands", menu=menu_commands)
 
+### FRAME - dice select
+### TK VARS
+die1value = tk.IntVar()
+die2value = tk.IntVar()
 
 frame_dice_select = tk.Frame(frame_main)
-frame_dice_select.pack()
+frame_dice_select.grid(row=0, column=0)
 
+## SUBFRAME - die1 & die2
 frame_die1 = tk.Frame(frame_dice_select)
 frame_die1.grid(row=0, column=1)
 frame_die2 = tk.Frame(frame_dice_select)
@@ -106,9 +126,6 @@ label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
 label_die1.grid(row=0, column=0)
 label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
 label_die2.grid(row=1, column=0)
-
-die1value = tk.IntVar()
-die2value = tk.IntVar()
 
 d1r1 = tk.Radiobutton(frame_die1, text="1", variable=die1value, value=1)
 d1r1.grid(row=0, column=0)
@@ -139,21 +156,70 @@ d2r6.grid(row=0, column=5)
 button_submit = tk.Button(frame_submit, text="Submit", command=submit_dice)
 button_submit.pack()
 
-frame_console = tk.Frame(frame_main)
-frame_console.pack()
+### FRAME - statistics
+### TK VARS
+strvar_r1pw = tk.StringVar()
+strvar_r1dw = tk.StringVar()
+strvar_apw = tk.StringVar()
+strvar_adw = tk.StringVar()
 
-text_console = tk.Text(frame_console)
+frame_statistics = tk.Frame(frame_main)
+frame_statistics.grid(row=0, column=1)
+
+label_statistics = tk.Label(frame_statistics, text="Statistics")
+label_statistics.grid(row=0, column=1)
+
+label_pass = tk.Label(frame_statistics, text="Pass")
+label_pass.grid(row=1, column=1)
+
+label_dontpass = tk.Label(frame_statistics, text="Don't")
+label_dontpass.grid(row=1, column=2)
+
+label_first = tk.Label(frame_statistics, text="R1", anchor="w")
+label_first.grid(row=2, column=0)
+
+label_rest = tk.Label(frame_statistics, text="R2+", anchor="w")
+label_rest.grid(row=3, column=0)
+
+label_r1_pass_win = tk.Label(frame_statistics, textvariable=strvar_r1pw)
+label_r1_pass_win.grid(row=2, column=1)
+
+label_r1_dont_win = tk.Label(frame_statistics, textvariable=strvar_r1dw)
+label_r1_dont_win.grid(row=2, column=2)
+
+label_after_pass_win = tk.Label(frame_statistics, textvariable=strvar_apw)
+label_after_pass_win.grid(row=3, column=1)
+
+label_after_dont_win = tk.Label(frame_statistics, textvariable=strvar_adw)
+label_after_dont_win.grid(row=3, column=2)
+
+### FRAME - console
+frame_console = tk.Frame(frame_main)
+frame_console.grid(row=1)
+
+text_console = st.ScrolledText(frame_console)
+text_console.configure(state="disabled", font=("Arial", 9))
 text_console.pack()
 
+
+### VARIABLES
 # ARRAYS FOR FULL SESSION AND GAME LOGS
 array_session = []
 array_game = []
 
-# PER SESSION VARIABLES
+# COUNTER VARIABLES
 session_in_progress = 0
 game_number = 0
 
-# PER GAME VARIABLES
+# STATISTICS VARS
+r1_pass_win = 0
+r1_dont_win = 0
+after_pass_win = 0
+after_dont_win = 0
+array_die_counts = [0] * 6
+array_total_counts = [0] * 12
+
+# PER GAME COUNTER VARIABLES
 point = 0
 roll_number = 0
 
