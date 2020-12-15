@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.scrolledtext as st
+from die import Die
 from roll import Roll
 from game import Game
 from session import Session
@@ -51,10 +52,17 @@ class App:
         frame_die2 = tk.Frame(frame_dice_select)
         frame_die2.grid(row=1, column=1)
         frame_submit = tk.Frame(frame_dice_select)
-        frame_submit.grid(row=2, column=1)
+        frame_submit.grid(row=0, column=2)
 
         label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
         label_die1.grid(row=0, column=0)
+
+        canvas_die1 = tk.Canvas(frame_dice_select, width=40, height=40)
+        canvas_die1.grid(row=4, column=4)
+
+        img_die1 = Die(6)
+        img_die1.draw(canvas_die1)
+
         label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
         label_die2.grid(row=1, column=0)
 
@@ -84,7 +92,7 @@ class App:
         d2r6 = tk.Radiobutton(frame_die2, text="6", variable=self.die2value, value=6)
         d2r6.grid(row=0, column=5)
 
-        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value.get(), self.die2value.get()))
+        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value.get(), self.die2value.get()), height=5, width=6)
         button_submit.pack()
 
         ### Frame - Statistics
