@@ -21,8 +21,8 @@ class App:
         self.root.title("Craps Logger")
         
         # TK Variables to update labels
-        self.die1value = tk.IntVar()
-        self.die2value = tk.IntVar()
+        self.die1value = 0
+        self.die2value = 0
         self.strvar_r1pw = tk.StringVar()
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
@@ -64,36 +64,29 @@ class App:
         canvas_die5 = tk.Canvas(frame_die1, width=40, height=40)
         canvas_die6 = tk.Canvas(frame_die1, width=40, height=40)
 
-        img_die1 = Die(1)
-        img_die1.draw(canvas_die1)
-        img_die2 = Die(2)
-        img_die2.draw(canvas_die2)
-        img_die3 = Die(3)
-        img_die3.draw(canvas_die3)
-        img_die4 = Die(4)
-        img_die4.draw(canvas_die4)
-        img_die5 = Die(5)
-        img_die5.draw(canvas_die5)
-        img_die6 = Die(6)
-        img_die6.draw(canvas_die6)
+        canvas_die1.bind('<Button-1>', lambda  v: self.select_die_1(1))
+        canvas_die2.bind('<Button-1>', lambda  v: self.select_die_1(2))
+        canvas_die3.bind('<Button-1>', lambda  v: self.select_die_1(3))
+        canvas_die4.bind('<Button-1>', lambda  v: self.select_die_1(4))
+        canvas_die5.bind('<Button-1>', lambda  v: self.select_die_1(5))
+        canvas_die6.bind('<Button-1>', lambda  v: self.select_die_1(6))
 
-        d1r1 = tk.Radiobutton(frame_die1, variable=self.die1value, value=1)
-        d1r1.grid(row=1, column=0)
-        d1r2 = tk.Radiobutton(frame_die1, variable=self.die1value, value=2)
-        d1r2.grid(row=1, column=1)
-        d1r3 = tk.Radiobutton(frame_die1, variable=self.die1value, value=3)
-        d1r3.grid(row=1, column=2)
-        d1r4 = tk.Radiobutton(frame_die1, variable=self.die1value, value=4)
-        d1r4.grid(row=1, column=3)
-        d1r5 = tk.Radiobutton(frame_die1, variable=self.die1value, value=5)
-        d1r5.grid(row=1, column=4)
-        d1r6 = tk.Radiobutton(frame_die1, variable=self.die1value, value=6)
-        d1r6.grid(row=1, column=5)
+        img_die1 = Die(1)
+        img_die2 = Die(2)
+        img_die3 = Die(3)
+        img_die4 = Die(4)
+        img_die5 = Die(5)
+        img_die6 = Die(6)
+
+        img_die1.draw(canvas_die1)
+        img_die2.draw(canvas_die2)
+        img_die3.draw(canvas_die3)
+        img_die4.draw(canvas_die4)
+        img_die5.draw(canvas_die5)
+        img_die6.draw(canvas_die6)
 
         label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
         label_die2.grid(row=1, column=0)
-
-
 
         canvas2_die1 = tk.Canvas(frame_die2, width=40, height=40)
         canvas2_die2 = tk.Canvas(frame_die2, width=40, height=40)
@@ -102,6 +95,13 @@ class App:
         canvas2_die5 = tk.Canvas(frame_die2, width=40, height=40)
         canvas2_die6 = tk.Canvas(frame_die2, width=40, height=40)
 
+        canvas2_die1.bind('<Button-1>', lambda  v: self.select_die_2(1))
+        canvas2_die2.bind('<Button-1>', lambda  v: self.select_die_2(2))
+        canvas2_die3.bind('<Button-1>', lambda  v: self.select_die_2(3))
+        canvas2_die4.bind('<Button-1>', lambda  v: self.select_die_2(4))
+        canvas2_die5.bind('<Button-1>', lambda  v: self.select_die_2(5))
+        canvas2_die6.bind('<Button-1>', lambda  v: self.select_die_2(6))
+
         img_die1.draw(canvas2_die1)
         img_die2.draw(canvas2_die2)
         img_die3.draw(canvas2_die3)
@@ -109,20 +109,7 @@ class App:
         img_die5.draw(canvas2_die5)
         img_die6.draw(canvas2_die6)
 
-        d2r1 = tk.Radiobutton(frame_die2, variable=self.die2value, value=1)
-        d2r1.grid(row=1, column=0)
-        d2r2 = tk.Radiobutton(frame_die2, variable=self.die2value, value=2)
-        d2r2.grid(row=1, column=1)
-        d2r3 = tk.Radiobutton(frame_die2, variable=self.die2value, value=3)
-        d2r3.grid(row=1, column=2)
-        d2r4 = tk.Radiobutton(frame_die2, variable=self.die2value, value=4)
-        d2r4.grid(row=1, column=3)
-        d2r5 = tk.Radiobutton(frame_die2, variable=self.die2value, value=5)
-        d2r5.grid(row=1, column=4)
-        d2r6 = tk.Radiobutton(frame_die2, variable=self.die2value, value=6)
-        d2r6.grid(row=1, column=5)
-
-        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value.get(), self.die2value.get()), height=5, width=6)
+        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value, self.die2value), height=5, width=6)
         button_submit.pack()
 
         ### Frame - Statistics
@@ -234,6 +221,14 @@ class App:
         self.text_console.insert(tk.END, (text_string + "\n"))
         self.text_console.see(tk.END)
         self.text_console.configure(state="disabled")
+
+    def select_die_1(self, value):
+        self.die1value = value
+        self.console_out("selected die 1:  " + str(value))
+
+    def select_die_2(self, value):
+        self.die2value = value
+        self.console_out("selected die 2:  " + str(self.die2value))
 
 if __name__ == "__main__":
     main()
