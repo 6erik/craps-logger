@@ -19,6 +19,8 @@ class App:
 
         self.root = tk.Tk()
         self.root.title("Craps Logger")
+
+        self.orig_color = self.root.cget("background")
         
         # TK Variables to update labels
         self.die1value = 0
@@ -27,6 +29,10 @@ class App:
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
+
+        # Widget Arrays
+        self.canvas1_dice = []
+        self.canvas2_dice = []
 
         # Statistics Variables
         self.r1_pass_win = 0
@@ -63,13 +69,14 @@ class App:
         canvas_die4 = tk.Canvas(frame_die1, width=40, height=40)
         canvas_die5 = tk.Canvas(frame_die1, width=40, height=40)
         canvas_die6 = tk.Canvas(frame_die1, width=40, height=40)
+        self.canvas1_dice.extend((canvas_die1, canvas_die2, canvas_die3, canvas_die4, canvas_die5, canvas_die6))
 
-        canvas_die1.bind('<Button-1>', lambda  v: self.select_die_1(1))
-        canvas_die2.bind('<Button-1>', lambda  v: self.select_die_1(2))
-        canvas_die3.bind('<Button-1>', lambda  v: self.select_die_1(3))
-        canvas_die4.bind('<Button-1>', lambda  v: self.select_die_1(4))
-        canvas_die5.bind('<Button-1>', lambda  v: self.select_die_1(5))
-        canvas_die6.bind('<Button-1>', lambda  v: self.select_die_1(6))
+        canvas_die1.bind('<Button-1>', lambda v: self.select_die(1, 1))
+        canvas_die2.bind('<Button-1>', lambda v: self.select_die(1, 2))
+        canvas_die3.bind('<Button-1>', lambda v: self.select_die(1, 3))
+        canvas_die4.bind('<Button-1>', lambda v: self.select_die(1, 4))
+        canvas_die5.bind('<Button-1>', lambda v: self.select_die(1, 5))
+        canvas_die6.bind('<Button-1>', lambda v: self.select_die(1, 6))
 
         img_die1 = Die(1)
         img_die2 = Die(2)
@@ -94,13 +101,14 @@ class App:
         canvas2_die4 = tk.Canvas(frame_die2, width=40, height=40)
         canvas2_die5 = tk.Canvas(frame_die2, width=40, height=40)
         canvas2_die6 = tk.Canvas(frame_die2, width=40, height=40)
+        self.canvas2_dice.extend((canvas2_die1, canvas2_die2, canvas2_die3, canvas2_die4, canvas2_die5, canvas2_die6))
 
-        canvas2_die1.bind('<Button-1>', lambda  v: self.select_die_2(1))
-        canvas2_die2.bind('<Button-1>', lambda  v: self.select_die_2(2))
-        canvas2_die3.bind('<Button-1>', lambda  v: self.select_die_2(3))
-        canvas2_die4.bind('<Button-1>', lambda  v: self.select_die_2(4))
-        canvas2_die5.bind('<Button-1>', lambda  v: self.select_die_2(5))
-        canvas2_die6.bind('<Button-1>', lambda  v: self.select_die_2(6))
+        canvas2_die1.bind('<Button-1>', lambda v: self.select_die(2, 1))
+        canvas2_die2.bind('<Button-1>', lambda v: self.select_die(2, 2))
+        canvas2_die3.bind('<Button-1>', lambda v: self.select_die(2, 3))
+        canvas2_die4.bind('<Button-1>', lambda v: self.select_die(2, 4))
+        canvas2_die5.bind('<Button-1>', lambda v: self.select_die(2, 5))
+        canvas2_die6.bind('<Button-1>', lambda v: self.select_die(2, 6))
 
         img_die1.draw(canvas2_die1)
         img_die2.draw(canvas2_die2)
@@ -222,13 +230,30 @@ class App:
         self.text_console.see(tk.END)
         self.text_console.configure(state="disabled")
 
-    def select_die_1(self, value):
-        self.die1value = value
-        self.console_out("selected die 1:  " + str(value))
+    def select_die(self, die, value):
+        if die == 1:
+            self.highlight_die(die, value)
+            self.die1value = value
+        elif die == 2:
+            self.highlight_die(die, value)
+            self.die2value = value
+            
+        self.console_out("selected die " + str(die) + ": " + str(value))
 
-    def select_die_2(self, value):
-        self.die2value = value
-        self.console_out("selected die 2:  " + str(self.die2value))
+    def highlight_die(self, die, value):
+        if die == 1:
+            for i in range(6):
+                if i == value - 1:
+                    self.canvas1_dice[i].configure(bg="red")
+                else:
+                    self.canvas1_dice[i].configure(bg=self.orig_color)
+
+        elif die == 2:
+            for i in range(6):
+                if i == value - 1:
+                    self.canvas2_dice[i].configure(bg="red")
+                else:
+                    self.canvas2_dice[i].configure(bg=self.orig_color)
 
 if __name__ == "__main__":
     main()
