@@ -25,10 +25,18 @@ class App:
         # TK Variables to update labels
         self.die1value = 0
         self.die2value = 0
+
+        # TK Variables to update labels
         self.strvar_r1pw = tk.StringVar()
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
+        self.strvar_count_1 = tk.StringVar()
+        self.strvar_count_2 = tk.StringVar()
+        self.strvar_count_3 = tk.StringVar()
+        self.strvar_count_3 = tk.StringVar()
+        self.strvar_count_3 = tk.StringVar()
+        self.strvar_count_3 = tk.StringVar()
 
         # Widget Arrays
         self.canvas1_dice = []
@@ -63,59 +71,25 @@ class App:
         label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
         label_die1.grid(row=0, column=0)
 
-        canvas_die1 = tk.Canvas(frame_die1, width=40, height=40)
-        canvas_die2 = tk.Canvas(frame_die1, width=40, height=40)
-        canvas_die3 = tk.Canvas(frame_die1, width=40, height=40)
-        canvas_die4 = tk.Canvas(frame_die1, width=40, height=40)
-        canvas_die5 = tk.Canvas(frame_die1, width=40, height=40)
-        canvas_die6 = tk.Canvas(frame_die1, width=40, height=40)
-        self.canvas1_dice.extend((canvas_die1, canvas_die2, canvas_die3, canvas_die4, canvas_die5, canvas_die6))
-
-        canvas_die1.bind('<Button-1>', lambda v: self.select_die(1, 1))
-        canvas_die2.bind('<Button-1>', lambda v: self.select_die(1, 2))
-        canvas_die3.bind('<Button-1>', lambda v: self.select_die(1, 3))
-        canvas_die4.bind('<Button-1>', lambda v: self.select_die(1, 4))
-        canvas_die5.bind('<Button-1>', lambda v: self.select_die(1, 5))
-        canvas_die6.bind('<Button-1>', lambda v: self.select_die(1, 6))
-
-        img_die1 = Die(1)
-        img_die2 = Die(2)
-        img_die3 = Die(3)
-        img_die4 = Die(4)
-        img_die5 = Die(5)
-        img_die6 = Die(6)
-
-        img_die1.draw(canvas_die1)
-        img_die2.draw(canvas_die2)
-        img_die3.draw(canvas_die3)
-        img_die4.draw(canvas_die4)
-        img_die5.draw(canvas_die5)
-        img_die6.draw(canvas_die6)
-
         label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
         label_die2.grid(row=1, column=0)
 
-        canvas2_die1 = tk.Canvas(frame_die2, width=40, height=40)
-        canvas2_die2 = tk.Canvas(frame_die2, width=40, height=40)
-        canvas2_die3 = tk.Canvas(frame_die2, width=40, height=40)
-        canvas2_die4 = tk.Canvas(frame_die2, width=40, height=40)
-        canvas2_die5 = tk.Canvas(frame_die2, width=40, height=40)
-        canvas2_die6 = tk.Canvas(frame_die2, width=40, height=40)
-        self.canvas2_dice.extend((canvas2_die1, canvas2_die2, canvas2_die3, canvas2_die4, canvas2_die5, canvas2_die6))
+        for i in range(6):
+            def make_lambda(die, index):
+                return lambda v: self.select_die(die, index+1)
 
-        canvas2_die1.bind('<Button-1>', lambda v: self.select_die(2, 1))
-        canvas2_die2.bind('<Button-1>', lambda v: self.select_die(2, 2))
-        canvas2_die3.bind('<Button-1>', lambda v: self.select_die(2, 3))
-        canvas2_die4.bind('<Button-1>', lambda v: self.select_die(2, 4))
-        canvas2_die5.bind('<Button-1>', lambda v: self.select_die(2, 5))
-        canvas2_die6.bind('<Button-1>', lambda v: self.select_die(2, 6))
+            frame_die_x = tk.Canvas(frame_die1, width=40, height=40)
+            self.canvas1_dice.append(frame_die_x)
+            self.canvas1_dice[i].bind('<Button-1>', make_lambda(1, i))
 
-        img_die1.draw(canvas2_die1)
-        img_die2.draw(canvas2_die2)
-        img_die3.draw(canvas2_die3)
-        img_die4.draw(canvas2_die4)
-        img_die5.draw(canvas2_die5)
-        img_die6.draw(canvas2_die6)
+            frame_die_y = tk.Canvas(frame_die2, width=40, height=40)
+            self.canvas2_dice.append(frame_die_y)
+            self.canvas2_dice[i].bind('<Button-1>', make_lambda(2, i))
+
+            die = Die(i+1)
+            die.draw(self.canvas1_dice[i])
+            die.draw(self.canvas2_dice[i])
+            
 
         button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value, self.die2value), height=5, width=6)
         button_submit.pack()
@@ -167,6 +141,7 @@ class App:
         # Check if radio buttons were selected (0 if unselected)
         if (d1 > 0 and d2 > 0):
             roll = Roll(d1, d2)
+            self.session.process_roll(roll)
             self.game.add_roll(roll)
 
             self.console_out("Gm "+ str(game_number + 1) + "- Rd " + str(roll_number + 1) + ": " + str(d1) + " " + str(d2))
@@ -232,28 +207,36 @@ class App:
 
     def select_die(self, die, value):
         if die == 1:
-            self.highlight_die(die, value)
             self.die1value = value
-        elif die == 2:
-            self.highlight_die(die, value)
-            self.die2value = value
-            
-        self.console_out("selected die " + str(die) + ": " + str(value))
 
-    def highlight_die(self, die, value):
-        if die == 1:
             for i in range(6):
                 if i == value - 1:
-                    self.canvas1_dice[i].configure(bg="red")
+                    self.canvas1_dice[i].configure(bg="white")
                 else:
                     self.canvas1_dice[i].configure(bg=self.orig_color)
 
         elif die == 2:
+            self.die2value = value
+
             for i in range(6):
                 if i == value - 1:
-                    self.canvas2_dice[i].configure(bg="red")
+                    self.canvas2_dice[i].configure(bg="white")
                 else:
                     self.canvas2_dice[i].configure(bg=self.orig_color)
+            
+        #self.console_out("selected die " + str(die) + ": " + str(value))
+
+    def update_statistics(self):
+        self.strvar_r1pw = self.session.get_round1_pass_wins()
+        self.strvar_r1dw = self.session.get_round1_dont_wins()
+        self.strvar_apw = self.session.get_after_pass_wins()
+        self.strvar_adw = self.session.get_after_dont_wins()
+        self.strvar_count_1 = self.session.get_count_val(1)
+        self.strvar_count_2 = self.session.get_count_val(2)
+        self.strvar_count_3 = self.session.get_count_val(3)
+        self.strvar_count_3 = self.session.get_count_val(4)
+        self.strvar_count_3 = self.session.get_count_val(5)
+        self.strvar_count_3 = self.session.get_count_val(6)
 
 if __name__ == "__main__":
     main()

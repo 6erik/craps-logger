@@ -1,4 +1,4 @@
-# Class module to draw Dice
+# Dice class module used to draw
 class Die():
     def __init__(self, value):
         self.value = value
