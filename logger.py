@@ -22,7 +22,7 @@ class App:
 
         self.orig_color = self.root.cget("background")
         
-        # TK Variables to update labels
+        # Variables to track dice
         self.die1value = 0
         self.die2value = 0
 
@@ -31,12 +31,12 @@ class App:
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
-        self.strvar_count_1 = tk.StringVar()
-        self.strvar_count_2 = tk.StringVar()
-        self.strvar_count_3 = tk.StringVar()
-        self.strvar_count_3 = tk.StringVar()
-        self.strvar_count_3 = tk.StringVar()
-        self.strvar_count_3 = tk.StringVar()
+        self.strvar_c1 = tk.StringVar()
+        self.strvar_c2 = tk.StringVar()
+        self.strvar_c3 = tk.StringVar()
+        self.strvar_c4 = tk.StringVar()
+        self.strvar_c5 = tk.StringVar()
+        self.strvar_c6 = tk.StringVar()
 
         # Widget Arrays
         self.canvas1_dice = []
@@ -50,6 +50,7 @@ class App:
 
         # Call method to create all GUI widgets
         self.create_widgets()
+        self.update_statistics()
 
     def create_widgets(self):
         # Using 'frame_main' to pack all subframes
@@ -125,6 +126,46 @@ class App:
         self.label_after_dont_win = tk.Label(frame_statistics, textvariable=self.strvar_adw)
         self.label_after_dont_win.grid(row=3, column=2)
 
+        label_frequencies = tk.Label(frame_statistics, text="Frequencies")
+        label_frequencies.grid(row=5, column=1)
+
+        self.label_count_1 = tk.Label(frame_statistics, text="1")
+        self.label_count_1.grid(row=6, column=0)
+
+        self.label_count_2 = tk.Label(frame_statistics, text="2")
+        self.label_count_2.grid(row=7, column=0)
+
+        self.label_count_3 = tk.Label(frame_statistics, text="3")
+        self.label_count_3.grid(row=8, column=0)
+
+        self.label_count_4 = tk.Label(frame_statistics, text="4")
+        self.label_count_4.grid(row=9, column=0)
+
+        self.label_count_5 = tk.Label(frame_statistics, text="5")
+        self.label_count_5.grid(row=10, column=0)
+
+        self.label_count_6 = tk.Label(frame_statistics, text="6")
+        self.label_count_6.grid(row=11, column=0)
+
+        self.label_c1 = tk.Label(frame_statistics, textvariable=self.strvar_c1)
+        self.label_c1.grid(row=6, column=2)
+
+        self.label_c2 = tk.Label(frame_statistics, textvariable=self.strvar_c2)
+        self.label_c2.grid(row=7, column=2)
+
+        self.label_c3 = tk.Label(frame_statistics, textvariable=self.strvar_c3)
+        self.label_c3.grid(row=8, column=2)
+
+        self.label_c4 = tk.Label(frame_statistics, textvariable=self.strvar_c4)
+        self.label_c4.grid(row=9, column=2)
+
+        self.label_c5 = tk.Label(frame_statistics, textvariable=self.strvar_c5)
+        self.label_c5.grid(row=10, column=2)
+
+        self.label_c6 = tk.Label(frame_statistics, textvariable=self.strvar_c6)
+        self.label_c6.grid(row=11, column=2)
+
+
         ### Frame - Text console
         self.frame_console = tk.Frame(frame_main)
         self.frame_console.grid(row=1)
@@ -146,9 +187,11 @@ class App:
 
             self.console_out("Gm "+ str(game_number + 1) + "- Rd " + str(roll_number + 1) + ": " + str(d1) + " " + str(d2))
             self.make_game_decision(roll)
+            self.update_statistics()
 
         else:
             self.console_out("Select dice values before submitting")
+
 
     def make_game_decision(self, roll):
         val = roll.get_dice_total()
@@ -170,30 +213,31 @@ class App:
 
     def game_over(self, val):
         roll_number = self.game.get_roll_num()
+        winner = ""
 
         if roll_number == 1:
             if val == 7 or val == 11:
                 self.console_out("Pass WIN - Dont LOSS")
-                self.r1_pass_win += 1
-                self.strvar_r1pw.set(str(self.r1_pass_win))
+                winner = "pass"
             
             elif val == 2 or val == 3:
                 self.console_out("Pass LOSS - Dont WIN")
-                self.r1_dont_win += 1
-                self.strvar_r1dw.set(str(self.r1_dont_win))
+                winner = "dont"
             
             else: # if val is 12
                 self.console_out("Pass LOSS - Dont PUSH")
+                winner = "push"
 
         else:
             if val == 7:
                 self.console_out("Pass LOSS - Dont WIN")
-                self.after_dont_win += 1
-                self.strvar_adw.set(str(self.after_dont_win))
+                winner = "dont"
+
             else:
                 self.console_out("Pass WIN - Dont LOSS")
-                self.after_pass_win += 1
-                self.strvar_apw.set(str(self.after_pass_win))
+                winner = "pass"
+
+        self.session.set_winner(winner, roll_number)
         
         # Add completed game to session, create new Game instance
         self.session.add_game(self.game)
@@ -227,16 +271,16 @@ class App:
         #self.console_out("selected die " + str(die) + ": " + str(value))
 
     def update_statistics(self):
-        self.strvar_r1pw = self.session.get_round1_pass_wins()
-        self.strvar_r1dw = self.session.get_round1_dont_wins()
-        self.strvar_apw = self.session.get_after_pass_wins()
-        self.strvar_adw = self.session.get_after_dont_wins()
-        self.strvar_count_1 = self.session.get_count_val(1)
-        self.strvar_count_2 = self.session.get_count_val(2)
-        self.strvar_count_3 = self.session.get_count_val(3)
-        self.strvar_count_3 = self.session.get_count_val(4)
-        self.strvar_count_3 = self.session.get_count_val(5)
-        self.strvar_count_3 = self.session.get_count_val(6)
+        self.strvar_r1pw.set(self.session.get_round1_pass_wins())
+        self.strvar_r1dw.set(self.session.get_round1_dont_wins())
+        self.strvar_apw.set(self.session.get_after_pass_wins())
+        self.strvar_adw.set(self.session.get_after_dont_wins())
+        self.strvar_c1.set(self.session.get_count_val(1))
+        self.strvar_c2.set(self.session.get_count_val(2))
+        self.strvar_c3.set(self.session.get_count_val(3))
+        self.strvar_c4.set(self.session.get_count_val(4))
+        self.strvar_c5.set(self.session.get_count_val(5))
+        self.strvar_c6.set(self.session.get_count_val(6))
 
 if __name__ == "__main__":
     main()

@@ -49,3 +49,21 @@ class Session:
 
     def get_count_sum(self, sum):
         return self.count_sum[sum - 2]
+
+    def set_winner(self, winner, roll_number):
+        if winner == "pass":
+            if roll_number > 1:
+                self.after_pass_wins += 1
+            
+            else:
+                self.round1_pass_wins += 1
+
+        elif winner == "dont":
+            if roll_number > 1:
+                self.after_dont_wins += 1
+            
+            else:
+                self.round1_dont_wins += 1
+        
+        else:
+            pass
