@@ -1,9 +1,10 @@
-# Class module to draw Dice
+# Dice class module used to draw
 class Die():
     def __init__(self, value):
         self.value = value
 
     def draw(self, canvas):
+        canvas.configure(bg="white")
         canvas.create_rectangle(2, 2, 38, 38, width=1)
 
         if self.value == 1:
@@ -44,4 +45,4 @@ class Die():
             canvas.create_oval(26, 8, 32, 14, width=1, fill="black")
             canvas.create_oval(8, 26, 14, 32, width=1, fill="black")
 
-        canvas.grid(row=0, column=self.value - 1)
+        canvas.grid(row=0, column=self.value - 1, padx=(4, 4), pady=(2, 2))

@@ -21,3 +21,4 @@ class Roll:
 
     def get_dice_total(self):
         return self.get_die1_value() + self.get_die2_value()
+        
