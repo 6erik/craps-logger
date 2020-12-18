@@ -253,7 +253,7 @@ class App:
                 if i == value - 1:
                     self.canvas1_dice[i].configure(bg="RoyalBlue1")
                 else:
-                    self.canvas1_dice[i].configure(bg=self.orig_color)
+                    self.canvas1_dice[i].configure(bg="white")
 
         elif die == 2:
             self.die2value = value
@@ -262,7 +262,7 @@ class App:
                 if i == value - 1:
                     self.canvas2_dice[i].configure(bg="RoyalBlue1")
                 else:
-                    self.canvas2_dice[i].configure(bg=self.orig_color)
+                    self.canvas2_dice[i].configure(bg="white")
             
         #self.console_out("selected die " + str(die) + ": " + str(value))
 

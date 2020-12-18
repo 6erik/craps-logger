@@ -4,6 +4,7 @@ class Die():
         self.value = value
 
     def draw(self, canvas):
+        canvas.configure(bg="white")
         canvas.create_rectangle(2, 2, 38, 38, width=1)
 
         if self.value == 1:
@@ -44,4 +45,4 @@ class Die():
             canvas.create_oval(26, 8, 32, 14, width=1, fill="black")
             canvas.create_oval(8, 26, 14, 32, width=1, fill="black")
 
-        canvas.grid(row=0, column=self.value - 1, padx=(3, 3), pady=(2, 2))
+        canvas.grid(row=0, column=self.value - 1, padx=(4, 4), pady=(2, 2))
