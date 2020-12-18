@@ -53,31 +53,35 @@ class App:
 
         ### Frame - Dice select
         frame_dice_select = tk.Frame(frame_main)
-        frame_dice_select.grid(row=0, column=0)
+        frame_dice_select.grid(row=0, column=0, padx=(5, 5), pady=(15, 0))
 
         ## Subframe - Die1 & Die2
-        frame_die1 = tk.Frame(frame_dice_select)
+        frame_dice_only = tk.Frame(frame_dice_select)
+        frame_dice_only.grid(row=0, column=0)
+        frame_die1 = tk.Frame(frame_dice_only)
         frame_die1.grid(row=0, column=1)
-        frame_die2 = tk.Frame(frame_dice_select)
+        frame_die2 = tk.Frame(frame_dice_only)
         frame_die2.grid(row=1, column=1)
-        frame_submit = tk.Frame(frame_dice_select)
-        frame_submit.grid(row=0, column=2)
 
-        label_die1 = tk.Label(frame_dice_select, text="Die 1: ")
+        frame_submit = tk.Frame(frame_dice_select)
+        frame_submit.grid(row=0, column=1)
+
+        label_die1 = tk.Label(frame_dice_only, text="Die 1: ")
         label_die1.grid(row=0, column=0)
 
-        label_die2 = tk.Label(frame_dice_select, text="Die 2: ")
+        label_die2 = tk.Label(frame_dice_only, text="Die 2: ")
         label_die2.grid(row=1, column=0)
 
+        # Loop to create frames and bind actions for Dice selection
         for i in range(6):
             def make_lambda(die, index):
                 return lambda v: self.select_die(die, index+1)
 
-            frame_die_x = tk.Canvas(frame_die1, width=40, height=40)
+            frame_die_x = tk.Canvas(frame_die1, width=37, height=37)
             self.canvas1_dice.append(frame_die_x)
             self.canvas1_dice[i].bind('<Button-1>', make_lambda(1, i))
 
-            frame_die_y = tk.Canvas(frame_die2, width=40, height=40)
+            frame_die_y = tk.Canvas(frame_die2, width=37, height=37)
             self.canvas2_dice.append(frame_die_y)
             self.canvas2_dice[i].bind('<Button-1>', make_lambda(2, i))
 
@@ -85,8 +89,8 @@ class App:
             die.draw(self.canvas1_dice[i])
             die.draw(self.canvas2_dice[i])
             
-        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value, self.die2value), height=5, width=6)
-        button_submit.pack()
+        button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value, self.die2value), height=3, width=8)
+        button_submit.grid(padx=(5, 5), pady=(5, 5))
 
         ### Frame - Statistics
         frame_statistics = tk.Frame(frame_main)
@@ -247,7 +251,7 @@ class App:
 
             for i in range(6):
                 if i == value - 1:
-                    self.canvas1_dice[i].configure(bg="white")
+                    self.canvas1_dice[i].configure(bg="RoyalBlue1")
                 else:
                     self.canvas1_dice[i].configure(bg=self.orig_color)
 
@@ -256,7 +260,7 @@ class App:
 
             for i in range(6):
                 if i == value - 1:
-                    self.canvas2_dice[i].configure(bg="white")
+                    self.canvas2_dice[i].configure(bg="RoyalBlue1")
                 else:
                     self.canvas2_dice[i].configure(bg=self.orig_color)
             
