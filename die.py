@@ -45,3 +45,4 @@ class Die():
             canvas.create_oval(8, 26, 14, 32, width=1, fill="black")
 
         canvas.grid(row=0, column=self.value - 1)
+        

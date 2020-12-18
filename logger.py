@@ -42,12 +42,6 @@ class App:
         self.canvas1_dice = []
         self.canvas2_dice = []
 
-        # Statistics Variables
-        self.r1_pass_win = 0
-        self.r1_dont_win = 0
-        self.after_pass_win = 0
-        self.after_dont_win = 0
-
         # Call method to create all GUI widgets
         self.create_widgets()
         self.update_statistics()
@@ -91,13 +85,12 @@ class App:
             die.draw(self.canvas1_dice[i])
             die.draw(self.canvas2_dice[i])
             
-
         button_submit = tk.Button(frame_submit, text="Submit", command=lambda : self.submit_dice(self.die1value, self.die2value), height=5, width=6)
         button_submit.pack()
 
         ### Frame - Statistics
         frame_statistics = tk.Frame(frame_main)
-        frame_statistics.grid(row=0, column=1)
+        frame_statistics.grid(row=1, column=1, padx=(0, 15), pady=(5, 5))
 
         label_statistics = tk.Label(frame_statistics, text="Statistics")
         label_statistics.grid(row=0, column=1)
@@ -165,10 +158,9 @@ class App:
         self.label_c6 = tk.Label(frame_statistics, textvariable=self.strvar_c6)
         self.label_c6.grid(row=11, column=2)
 
-
         ### Frame - Text console
         self.frame_console = tk.Frame(frame_main)
-        self.frame_console.grid(row=1)
+        self.frame_console.grid(row=1, padx=(10, 10), pady=(10, 10))
 
         self.text_console = st.ScrolledText(self.frame_console)
         self.text_console.configure(state="disabled", font=("Arial", 9))

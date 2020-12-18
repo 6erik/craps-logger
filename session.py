@@ -28,7 +28,8 @@ class Session:
         self.count_val[roll.get_die1_value() - 1] += 1
         self.count_val[roll.get_die2_value() - 1] += 1
         self.count_sum[roll.get_dice_total() - 2] += 1
-    
+
+    # Getters
     def get_game_num(self):
         return len(self.array_games)
 
@@ -50,6 +51,7 @@ class Session:
     def get_count_sum(self, sum):
         return self.count_sum[sum - 2]
 
+    # Setters
     def set_winner(self, winner, roll_number):
         if winner == "pass":
             if roll_number > 1:
