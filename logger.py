@@ -20,7 +20,7 @@ class App:
         self.root = tk.Tk()
         self.root.title("Craps Logger")
 
-        self.orig_color = self.root.cget("background")
+        # self.orig_color = self.root.cget("background")
         
         # Variables to track dice
         self.die1value = 0
@@ -49,7 +49,7 @@ class App:
     def create_widgets(self):
         # Using 'frame_main' to pack all subframes
         frame_main = tk.Frame(self.root)
-        frame_main.pack()
+        frame_main.grid(row=0, column=0)
 
         ### Frame - Dice select
         frame_dice_select = tk.Frame(frame_main)
@@ -93,8 +93,8 @@ class App:
         button_submit.grid(padx=(5, 5), pady=(5, 5))
 
         ### Frame - Statistics
-        frame_statistics = tk.Frame(frame_main)
-        frame_statistics.grid(row=1, column=1, padx=(0, 15), pady=(5, 5))
+        frame_statistics = tk.Frame(self.root)
+        frame_statistics.grid(row=0, column=1, padx=(0, 15), pady=(5, 5))
 
         label_statistics = tk.Label(frame_statistics, text="Statistics")
         label_statistics.grid(row=0, column=1)
