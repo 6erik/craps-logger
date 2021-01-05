@@ -14,4 +14,6 @@ class Game:
 
     def get_roll_num(self):
         return len(self.array_rolls)
-        
+    
+    def get_point(self):
+        return self.array_rolls[0]
