@@ -31,6 +31,7 @@ class App:
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
+        
         self.strvar_c1 = tk.StringVar()
         self.strvar_c2 = tk.StringVar()
         self.strvar_c3 = tk.StringVar()
@@ -109,7 +110,7 @@ class App:
         frame_statistics.grid(row=0, column=1, padx=(0, 15), pady=(5, 5))
 
         label_statistics = tk.Label(frame_statistics, text="Statistics")
-        label_statistics.grid(row=0, column=1)
+        label_statistics.grid(row=0, column=0, columnspan=3)
 
         label_pass = tk.Label(frame_statistics, text="Pass")
         label_pass.grid(row=1, column=1)
@@ -136,25 +137,25 @@ class App:
         self.label_after_dont_win.grid(row=3, column=2)
 
         label_die_frequencies = tk.Label(frame_statistics, text="Die Frequencies")
-        label_die_frequencies.grid(row=5, column=1)
+        label_die_frequencies.grid(row=5, column=0, columnspan=4)
 
         self.label_count_1 = tk.Label(frame_statistics, text="1")
-        self.label_count_1.grid(row=6, column=0)
+        self.label_count_1.grid(row=6, column=1)
 
         self.label_count_2 = tk.Label(frame_statistics, text="2")
-        self.label_count_2.grid(row=7, column=0)
+        self.label_count_2.grid(row=7, column=1)
 
         self.label_count_3 = tk.Label(frame_statistics, text="3")
-        self.label_count_3.grid(row=8, column=0)
+        self.label_count_3.grid(row=8, column=1)
 
         self.label_count_4 = tk.Label(frame_statistics, text="4")
-        self.label_count_4.grid(row=9, column=0)
+        self.label_count_4.grid(row=9, column=1)
 
         self.label_count_5 = tk.Label(frame_statistics, text="5")
-        self.label_count_5.grid(row=10, column=0)
+        self.label_count_5.grid(row=10, column=1)
 
         self.label_count_6 = tk.Label(frame_statistics, text="6")
-        self.label_count_6.grid(row=11, column=0)
+        self.label_count_6.grid(row=11, column=1)
 
         self.label_c1 = tk.Label(frame_statistics, textvariable=self.strvar_c1)
         self.label_c1.grid(row=6, column=2)
@@ -175,7 +176,7 @@ class App:
         self.label_c6.grid(row=11, column=2)
 
         label_sum_frequencies = tk.Label(frame_statistics, text="Sum Frequencies")
-        label_sum_frequencies.grid(row=12, column=1)
+        label_sum_frequencies.grid(row=12, column=0, columnspan=4)
 
         self.label_dash = tk.Label(frame_statistics, text="-")
         self.label_dash.grid(row=13, column=0)
@@ -354,6 +355,7 @@ class App:
         self.strvar_r1dw.set(self.session.get_round1_dont_wins())
         self.strvar_apw.set(self.session.get_after_pass_wins())
         self.strvar_adw.set(self.session.get_after_dont_wins())
+
         self.strvar_c1.set(self.session.get_count_val(1))
         self.strvar_c2.set(self.session.get_count_val(2))
         self.strvar_c3.set(self.session.get_count_val(3))
