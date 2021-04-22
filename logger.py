@@ -20,7 +20,7 @@ class App:
         self.root = tk.Tk()
         self.root.title("Craps Logger")
 
-        self.orig_color = self.root.cget("background")
+        # self.orig_color = self.root.cget("background")
         
         # Variables to track dice
         self.die1value = 0
@@ -31,12 +31,25 @@ class App:
         self.strvar_r1dw = tk.StringVar()
         self.strvar_apw = tk.StringVar()
         self.strvar_adw = tk.StringVar()
+        
         self.strvar_c1 = tk.StringVar()
         self.strvar_c2 = tk.StringVar()
         self.strvar_c3 = tk.StringVar()
         self.strvar_c4 = tk.StringVar()
         self.strvar_c5 = tk.StringVar()
         self.strvar_c6 = tk.StringVar()
+
+        self.strvar_s2 = tk.StringVar()
+        self.strvar_s3 = tk.StringVar()
+        self.strvar_s4 = tk.StringVar()
+        self.strvar_s5 = tk.StringVar()
+        self.strvar_s6 = tk.StringVar()
+        self.strvar_s7 = tk.StringVar()
+        self.strvar_s8 = tk.StringVar()
+        self.strvar_s9 = tk.StringVar()
+        self.strvar_s10 = tk.StringVar()
+        self.strvar_s11 = tk.StringVar()
+        self.strvar_s12 = tk.StringVar()
 
         # Widget Arrays
         self.canvas1_dice = []
@@ -49,7 +62,7 @@ class App:
     def create_widgets(self):
         # Using 'frame_main' to pack all subframes
         frame_main = tk.Frame(self.root)
-        frame_main.pack()
+        frame_main.grid(row=0, column=0)
 
         ### Frame - Dice select
         frame_dice_select = tk.Frame(frame_main)
@@ -93,11 +106,11 @@ class App:
         button_submit.grid(padx=(5, 5), pady=(5, 5))
 
         ### Frame - Statistics
-        frame_statistics = tk.Frame(frame_main)
-        frame_statistics.grid(row=1, column=1, padx=(0, 15), pady=(5, 5))
+        frame_statistics = tk.Frame(self.root)
+        frame_statistics.grid(row=0, column=1, padx=(0, 15), pady=(5, 5))
 
         label_statistics = tk.Label(frame_statistics, text="Statistics")
-        label_statistics.grid(row=0, column=1)
+        label_statistics.grid(row=0, column=0, columnspan=3)
 
         label_pass = tk.Label(frame_statistics, text="Pass")
         label_pass.grid(row=1, column=1)
@@ -123,26 +136,26 @@ class App:
         self.label_after_dont_win = tk.Label(frame_statistics, textvariable=self.strvar_adw)
         self.label_after_dont_win.grid(row=3, column=2)
 
-        label_frequencies = tk.Label(frame_statistics, text="Frequencies")
-        label_frequencies.grid(row=5, column=1)
+        label_die_frequencies = tk.Label(frame_statistics, text="Die Frequencies")
+        label_die_frequencies.grid(row=5, column=0, columnspan=4)
 
         self.label_count_1 = tk.Label(frame_statistics, text="1")
-        self.label_count_1.grid(row=6, column=0)
+        self.label_count_1.grid(row=6, column=1)
 
         self.label_count_2 = tk.Label(frame_statistics, text="2")
-        self.label_count_2.grid(row=7, column=0)
+        self.label_count_2.grid(row=7, column=1)
 
         self.label_count_3 = tk.Label(frame_statistics, text="3")
-        self.label_count_3.grid(row=8, column=0)
+        self.label_count_3.grid(row=8, column=1)
 
         self.label_count_4 = tk.Label(frame_statistics, text="4")
-        self.label_count_4.grid(row=9, column=0)
+        self.label_count_4.grid(row=9, column=1)
 
         self.label_count_5 = tk.Label(frame_statistics, text="5")
-        self.label_count_5.grid(row=10, column=0)
+        self.label_count_5.grid(row=10, column=1)
 
         self.label_count_6 = tk.Label(frame_statistics, text="6")
-        self.label_count_6.grid(row=11, column=0)
+        self.label_count_6.grid(row=11, column=1)
 
         self.label_c1 = tk.Label(frame_statistics, textvariable=self.strvar_c1)
         self.label_c1.grid(row=6, column=2)
@@ -161,6 +174,78 @@ class App:
 
         self.label_c6 = tk.Label(frame_statistics, textvariable=self.strvar_c6)
         self.label_c6.grid(row=11, column=2)
+
+        label_sum_frequencies = tk.Label(frame_statistics, text="Sum Frequencies")
+        label_sum_frequencies.grid(row=12, column=0, columnspan=4)
+
+        self.label_dash = tk.Label(frame_statistics, text="-")
+        self.label_dash.grid(row=13, column=0)
+
+        self.label_sum_2 = tk.Label(frame_statistics, text="2")
+        self.label_sum_2.grid(row=14, column=0)
+
+        self.label_sum_3 = tk.Label(frame_statistics, text="3")
+        self.label_sum_3.grid(row=15, column=0)
+
+        self.label_sum_4 = tk.Label(frame_statistics, text="4")
+        self.label_sum_4.grid(row=16, column=0)
+
+        self.label_sum_5 = tk.Label(frame_statistics, text="5")
+        self.label_sum_5.grid(row=17, column=0)
+
+        self.label_sum_6 = tk.Label(frame_statistics, text="6")
+        self.label_sum_6.grid(row=18, column=0)
+
+        self.label_sum_7 = tk.Label(frame_statistics, text="7")
+        self.label_sum_7.grid(row=13, column=2)
+
+        self.label_sum_8 = tk.Label(frame_statistics, text="8")
+        self.label_sum_8.grid(row=14, column=2)
+
+        self.label_sum_9 = tk.Label(frame_statistics, text="9")
+        self.label_sum_9.grid(row=15, column=2)
+
+        self.label_sum_10 = tk.Label(frame_statistics, text="10")
+        self.label_sum_10.grid(row=16, column=2)
+
+        self.label_sum_11 = tk.Label(frame_statistics, text="11")
+        self.label_sum_11.grid(row=17, column=2)
+
+        self.label_sum_12 = tk.Label(frame_statistics, text="12")
+        self.label_sum_12.grid(row=18, column=2)
+
+        self.label_s2 = tk.Label(frame_statistics, textvariable=self.strvar_s2)
+        self.label_s2.grid(row=14, column=1)
+
+        self.label_s3 = tk.Label(frame_statistics, textvariable=self.strvar_s3)
+        self.label_s3.grid(row=15, column=1)
+
+        self.label_s4 = tk.Label(frame_statistics, textvariable=self.strvar_s4)
+        self.label_s4.grid(row=16, column=1)
+
+        self.label_s5 = tk.Label(frame_statistics, textvariable=self.strvar_s5)
+        self.label_s5.grid(row=17, column=1)
+
+        self.label_s6 = tk.Label(frame_statistics, textvariable=self.strvar_s6)
+        self.label_s6.grid(row=18, column=1)
+
+        self.label_s7 = tk.Label(frame_statistics, textvariable=self.strvar_s7)
+        self.label_s7.grid(row=13, column=3)
+
+        self.label_s8 = tk.Label(frame_statistics, textvariable=self.strvar_s8)
+        self.label_s8.grid(row=14, column=3)
+
+        self.label_s9 = tk.Label(frame_statistics, textvariable=self.strvar_s9)
+        self.label_s9.grid(row=15, column=3)
+
+        self.label_s10 = tk.Label(frame_statistics, textvariable=self.strvar_s10)
+        self.label_s10.grid(row=16, column=3)
+
+        self.label_s11 = tk.Label(frame_statistics, textvariable=self.strvar_s11)
+        self.label_s11.grid(row=17, column=3)
+
+        self.label_s12 = tk.Label(frame_statistics, textvariable=self.strvar_s12)
+        self.label_s12.grid(row=18, column=3)
 
         ### Frame - Text console
         self.frame_console = tk.Frame(frame_main)
@@ -187,7 +272,6 @@ class App:
 
         else:
             self.console_out("Select dice values before submitting")
-
 
     def make_game_decision(self, roll):
         val = roll.get_dice_total()
@@ -271,12 +355,25 @@ class App:
         self.strvar_r1dw.set(self.session.get_round1_dont_wins())
         self.strvar_apw.set(self.session.get_after_pass_wins())
         self.strvar_adw.set(self.session.get_after_dont_wins())
+
         self.strvar_c1.set(self.session.get_count_val(1))
         self.strvar_c2.set(self.session.get_count_val(2))
         self.strvar_c3.set(self.session.get_count_val(3))
         self.strvar_c4.set(self.session.get_count_val(4))
         self.strvar_c5.set(self.session.get_count_val(5))
         self.strvar_c6.set(self.session.get_count_val(6))
+
+        self.strvar_s2.set(self.session.get_count_sum(2))
+        self.strvar_s3.set(self.session.get_count_sum(3))
+        self.strvar_s4.set(self.session.get_count_sum(4))
+        self.strvar_s5.set(self.session.get_count_sum(5))
+        self.strvar_s6.set(self.session.get_count_sum(6))
+        self.strvar_s7.set(self.session.get_count_sum(7))
+        self.strvar_s8.set(self.session.get_count_sum(8))
+        self.strvar_s9.set(self.session.get_count_sum(9))
+        self.strvar_s10.set(self.session.get_count_sum(10))
+        self.strvar_s11.set(self.session.get_count_sum(11))
+        self.strvar_s12.set(self.session.get_count_sum(12))
 
 if __name__ == "__main__":
     main()
