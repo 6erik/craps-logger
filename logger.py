@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.font as tkfont
 import tkinter.scrolledtext as st
 from die import Die
 from roll import Roll
@@ -64,6 +65,10 @@ class App:
         frame_main = tk.Frame(self.root)
         frame_main.grid(row=0, column=0)
 
+        # Fonts
+        label_font = tkfont.Font(family="Helvetica", size=10, weight="bold")
+        bold_font = tkfont.Font(family="Helvetica", size=11, weight="bold")
+
         ### Frame - Dice select
         frame_dice_select = tk.Frame(frame_main)
         frame_dice_select.grid(row=0, column=0, padx=(5, 5), pady=(15, 0))
@@ -109,19 +114,19 @@ class App:
         frame_statistics = tk.Frame(self.root)
         frame_statistics.grid(row=0, column=1, padx=(0, 15), pady=(5, 5))
 
-        label_statistics = tk.Label(frame_statistics, text="Statistics")
+        label_statistics = tk.Label(frame_statistics, text="Statistics", font=bold_font)
         label_statistics.grid(row=0, column=0, columnspan=3)
 
-        label_pass = tk.Label(frame_statistics, text="Pass")
+        label_pass = tk.Label(frame_statistics, text="Pass", font=label_font)
         label_pass.grid(row=1, column=1)
 
-        label_dontpass = tk.Label(frame_statistics, text="Don't")
+        label_dontpass = tk.Label(frame_statistics, text="Don't", font=label_font)
         label_dontpass.grid(row=1, column=2)
 
-        label_first = tk.Label(frame_statistics, text="R1", anchor="w")
+        label_first = tk.Label(frame_statistics, text="R1", anchor="w", font=label_font)
         label_first.grid(row=2, column=0)
 
-        label_rest = tk.Label(frame_statistics, text="R2+", anchor="w")
+        label_rest = tk.Label(frame_statistics, text="R2+", anchor="w", font=label_font)
         label_rest.grid(row=3, column=0)
 
         self.label_r1_pass_win = tk.Label(frame_statistics, textvariable=self.strvar_r1pw)
@@ -136,25 +141,25 @@ class App:
         self.label_after_dont_win = tk.Label(frame_statistics, textvariable=self.strvar_adw)
         self.label_after_dont_win.grid(row=3, column=2)
 
-        label_die_frequencies = tk.Label(frame_statistics, text="Die Frequencies")
+        label_die_frequencies = tk.Label(frame_statistics, text="Die Frequencies", font=label_font)
         label_die_frequencies.grid(row=5, column=0, columnspan=4)
 
-        self.label_count_1 = tk.Label(frame_statistics, text="1")
+        self.label_count_1 = tk.Label(frame_statistics, text="1", font=label_font)
         self.label_count_1.grid(row=6, column=1)
 
-        self.label_count_2 = tk.Label(frame_statistics, text="2")
+        self.label_count_2 = tk.Label(frame_statistics, text="2", font=label_font)
         self.label_count_2.grid(row=7, column=1)
 
-        self.label_count_3 = tk.Label(frame_statistics, text="3")
+        self.label_count_3 = tk.Label(frame_statistics, text="3", font=label_font)
         self.label_count_3.grid(row=8, column=1)
 
-        self.label_count_4 = tk.Label(frame_statistics, text="4")
+        self.label_count_4 = tk.Label(frame_statistics, text="4", font=label_font)
         self.label_count_4.grid(row=9, column=1)
 
-        self.label_count_5 = tk.Label(frame_statistics, text="5")
+        self.label_count_5 = tk.Label(frame_statistics, text="5", font=label_font)
         self.label_count_5.grid(row=10, column=1)
 
-        self.label_count_6 = tk.Label(frame_statistics, text="6")
+        self.label_count_6 = tk.Label(frame_statistics, text="6", font=label_font)
         self.label_count_6.grid(row=11, column=1)
 
         self.label_c1 = tk.Label(frame_statistics, textvariable=self.strvar_c1)
@@ -175,43 +180,43 @@ class App:
         self.label_c6 = tk.Label(frame_statistics, textvariable=self.strvar_c6)
         self.label_c6.grid(row=11, column=2)
 
-        label_sum_frequencies = tk.Label(frame_statistics, text="Sum Frequencies")
+        label_sum_frequencies = tk.Label(frame_statistics, text="Sum Frequencies", font=label_font)
         label_sum_frequencies.grid(row=12, column=0, columnspan=4)
 
-        self.label_dash = tk.Label(frame_statistics, text="-")
+        self.label_dash = tk.Label(frame_statistics, text="-", font=label_font)
         self.label_dash.grid(row=13, column=0)
 
-        self.label_sum_2 = tk.Label(frame_statistics, text="2")
+        self.label_sum_2 = tk.Label(frame_statistics, text="2", font=label_font)
         self.label_sum_2.grid(row=14, column=0)
 
-        self.label_sum_3 = tk.Label(frame_statistics, text="3")
+        self.label_sum_3 = tk.Label(frame_statistics, text="3", font=label_font)
         self.label_sum_3.grid(row=15, column=0)
 
-        self.label_sum_4 = tk.Label(frame_statistics, text="4")
+        self.label_sum_4 = tk.Label(frame_statistics, text="4", font=label_font)
         self.label_sum_4.grid(row=16, column=0)
 
-        self.label_sum_5 = tk.Label(frame_statistics, text="5")
+        self.label_sum_5 = tk.Label(frame_statistics, text="5", font=label_font)
         self.label_sum_5.grid(row=17, column=0)
 
-        self.label_sum_6 = tk.Label(frame_statistics, text="6")
+        self.label_sum_6 = tk.Label(frame_statistics, text="6", font=label_font)
         self.label_sum_6.grid(row=18, column=0)
 
-        self.label_sum_7 = tk.Label(frame_statistics, text="7")
+        self.label_sum_7 = tk.Label(frame_statistics, text="7", font=label_font)
         self.label_sum_7.grid(row=13, column=2)
 
-        self.label_sum_8 = tk.Label(frame_statistics, text="8")
+        self.label_sum_8 = tk.Label(frame_statistics, text="8", font=label_font)
         self.label_sum_8.grid(row=14, column=2)
 
-        self.label_sum_9 = tk.Label(frame_statistics, text="9")
+        self.label_sum_9 = tk.Label(frame_statistics, text="9", font=label_font)
         self.label_sum_9.grid(row=15, column=2)
 
-        self.label_sum_10 = tk.Label(frame_statistics, text="10")
+        self.label_sum_10 = tk.Label(frame_statistics, text="10", font=label_font)
         self.label_sum_10.grid(row=16, column=2)
 
-        self.label_sum_11 = tk.Label(frame_statistics, text="11")
+        self.label_sum_11 = tk.Label(frame_statistics, text="11", font=label_font)
         self.label_sum_11.grid(row=17, column=2)
 
-        self.label_sum_12 = tk.Label(frame_statistics, text="12")
+        self.label_sum_12 = tk.Label(frame_statistics, text="12", font=label_font)
         self.label_sum_12.grid(row=18, column=2)
 
         self.label_s2 = tk.Label(frame_statistics, textvariable=self.strvar_s2)
@@ -251,8 +256,8 @@ class App:
         self.frame_console = tk.Frame(frame_main)
         self.frame_console.grid(row=1, padx=(10, 10), pady=(10, 10))
 
-        self.text_console = st.ScrolledText(self.frame_console)
-        self.text_console.configure(state="disabled", font=("Arial", 9))
+        self.text_console = st.ScrolledText(self.frame_console, width=60, height=20)
+        self.text_console.configure(state="disabled", font=("Helvetica", 9))
         self.text_console.pack()
 
     ### Method definitions
